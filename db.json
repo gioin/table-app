@@ -1,0 +1,70 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Daniel",
+      "lastName": "Bichman",
+      "email": "daniel.bichman@testtask.com",
+      "role": "admin",
+      "status": false,
+      "permissions": {
+        "group1": {
+          "permission1": true,
+          "permission2": false
+        },
+        "group2": {
+          "permission3": true,
+          "permission4": false
+        },
+        "group3": {
+          "permission5": true,
+          "permission6": false
+        }
+      }
+    },
+    {
+      "firstName": "gasgas",
+      "lastName": "gasgas",
+      "email": "injgia15@gmail.com",
+      "role": "admin",
+      "permissions": {
+        "group1": {
+          "permission1": true,
+          "permission2": true
+        },
+        "group2": {
+          "permission3": true,
+          "permission4": true
+        },
+        "group3": {
+          "permission5": true,
+          "permission6": true
+        }
+      },
+      "status": true,
+      "id": 5
+    },
+    {
+      "firstName": "gas",
+      "lastName": "gas",
+      "email": "injgia15@gmail.com",
+      "role": "user",
+      "permissions": {
+        "group1": {
+          "permission1": true,
+          "permission2": false
+        },
+        "group2": {
+          "permission3": true,
+          "permission4": false
+        },
+        "group3": {
+          "permission5": true,
+          "permission6": false
+        }
+      },
+      "status": true,
+      "id": 6
+    }
+  ]
+}
