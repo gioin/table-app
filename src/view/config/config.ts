@@ -13,7 +13,7 @@ export const adminPermissions: any = {
       permission6: true
     }
   },
-  status: true,
+  status: true
 };
 export const userPermissions: any = {
   permissions: {
@@ -30,5 +30,10 @@ export const userPermissions: any = {
       permission6: false
     }
   },
-  status: true,
+  status: true
 };
+
+export const roles = [
+  { value: "user", label: "User" },
+  { value: "admin", label: "Admin" }
+];

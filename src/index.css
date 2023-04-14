@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+select:required:invalid {
+  color: #a0a0a0;
+}
+option[value=""][disabled] {
+  display: none;
+}
+option {
+  color: black;
+}

@@ -18,7 +18,7 @@ export const Button = React.forwardRef<
       className={classNames(
         "hover:opacity-80 text-white font-thin focus:outline-none focus:shadow-outline",
         {
-          "bg-gray-400 rounded-[30px] w-[142px] h-[40px]": variant === "plain",
+          "rounded-[30px] w-[142px] h-[40px]": variant === "plain",
           "rounded-full h-[65px] w-[65px] text-[30px]": variant === "circle",
           "cursor-not-allowed opacity-40 hover:!opacity-40 relative":
             rest.disabled

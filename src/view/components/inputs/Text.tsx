@@ -14,7 +14,7 @@ const TextInput = forwardRef<
       {label && (
         <label
           htmlFor={id}
-          className="block mb-2 text-sm font-medium text-gray-900"
+          className="block mb-2 text-md font-medium text-gray-900"
         >
           {label}
         </label>

@@ -5,10 +5,10 @@ import { useFormik } from "formik";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/inputs/Dropdown";
 import TextInput from "../components/inputs/Text";
-import { adminPermissions, userPermissions } from "../config/config";
-import { Users } from "./ProjectAccess";
+import { adminPermissions, roles, userPermissions } from "../config/config";
+import { Users } from "../props/global/props";
 
-interface InitialValueProps {
+export interface InitialValueProps {
   firstName: string;
   lastName: string;
   email: string;
@@ -116,17 +116,14 @@ function AddUser({ addUser, setIsModalOpen }: AddUserProps) {
           <DropDown
             id={"role"}
             placeholder="Role"
-            options={[
-              { value: "user", label: "User" },
-              { value: "admin", label: "Admin" }
-            ]}
+            options={[...roles]}
             onChange={formik.handleChange}
           />
           <small className="text-red">
             {formik.errors.role ? <div>{formik.errors.role}</div> : null}
           </small>
         </div>
-        <Button className="bg-table" variant="plain" type="submit">
+        <Button className="bg-gray-400" variant="plain" type="submit">
           Send Invitation
         </Button>
       </form>
