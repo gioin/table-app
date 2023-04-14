@@ -12,7 +12,6 @@ import Switch from "../components/inputs/Switch";
 import TextInput from "../components/inputs/Text";
 import { roles } from "../config/config";
 import { Users } from "../props/global/props";
-import { InitialValueProps } from "./AddUser";
 
 function UserSetup() {
   const routeParams = useParams();
@@ -33,8 +32,6 @@ function UserSetup() {
     }
   );
 
-  console.log("status", data?.data.status);
-
   const formik = useFormik({
     initialValues: {
       firstName: data?.data.firstName ?? "",
@@ -44,8 +41,6 @@ function UserSetup() {
       permissions: data?.data.permissions ?? {}
     },
     validate: (values) => {
-      console.log("values", values);
-
       const errors: any = {};
 
       if (values.firstName.length === 0) {
@@ -60,16 +55,12 @@ function UserSetup() {
 
       return errors;
     },
-    // validateOnBlur: false,
-    // validateOnChange: false,
     enableReinitialize: true,
     onSubmit: (values) => {
       //@ts-ignore
       updateUser.mutate({ ...data?.data, ...values });
     }
   });
-
-  console.log("formik.values.status", formik.values.status);
 
   const handleGroupToggle = (group: any, checked: any) => {
     formik.setValues((prevValues) => {
@@ -103,7 +94,6 @@ function UserSetup() {
         ...prevValues.permissions[group],
         [permission]: checked
       };
-      const allPermissionsChecked = Object.values(updatedGroup).every(Boolean);
       return {
         ...prevValues,
         permissions: {
@@ -220,11 +210,7 @@ function UserSetup() {
                   </small>
                 </div>
               </div>
-              <Button
-                className="bg-[#7E7EF1]"
-                variant="plain"
-                type="submit"
-              >
+              <Button className="bg-[#7E7EF1]" variant="plain" type="submit">
                 Send Invitation
               </Button>
             </div>
@@ -240,9 +226,6 @@ function UserSetup() {
                   const groupPermissions = formik.values.permissions[group];
                   const allPermissionsChecked =
                     Object.values(groupPermissions).every(Boolean);
-
-                  console.log("allPermissionsChecked", allPermissionsChecked);
-
                   return (
                     <Accordion
                       key={group}

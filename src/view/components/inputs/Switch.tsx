@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useEffect, useState, forwardRef, ForwardedRef } from "react";
+import React, { forwardRef, ForwardedRef } from "react";
 
 interface ToggleProp
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -13,7 +13,6 @@ const Switch = forwardRef(
     { onCheck, checked, disabled = false, ...rest }: ToggleProp,
     ref: ForwardedRef<HTMLDivElement>
   ) => {
-
     return (
       <div
         className="relative flex flex-col items-center justify-center"

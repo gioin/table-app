@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useKey } from "react-use";
 
@@ -48,15 +48,12 @@ const Modal = ({
       >
         <div className="flex items-center justify-between border-borderColor py-3 px-4">
           <div className="flex items-center">
-            {/* <div className="mr-2">{icon != null ? icon : <StatsIcon />}</div> */}
-            {/* <h5 className="text-headline font-bold xxs:text-[20px] xs:text-[20px]">{title}</h5> */}
           </div>
           <button
             onClick={onClose}
             type="button"
             className="flex cursor-pointer items-center justify-center rounded-full p-[3px] duration-[300ms] ease-in-out hover:bg-hover-icon"
           >
-            {/* <CloseIcon color={theme === 'dark' ? '#FFF' : '#000'} /> */}
             <svg
               className="h-6 w-6"
               xmlns="http://www.w3.org/2000/svg"

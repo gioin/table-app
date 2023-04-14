@@ -72,7 +72,6 @@ function AddUser({ addUser, setIsModalOpen }: AddUserProps) {
               id="firstName"
               name="firstName"
               type="text"
-              // className="mb-2"
               placeholder="First Name"
               onChange={formik.handleChange}
               value={formik.values.firstName}

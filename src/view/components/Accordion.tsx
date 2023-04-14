@@ -10,7 +10,7 @@ interface AccordionProps {
 
 const Accordion = ({ id, title, content, isActive = false, width = "400px" }: AccordionProps) => {
   const [isExpanded, setIsExpanded] = useState(isActive);
-
+  
   return (
     <div className="mb-4 border rounded-md" style={{width: width}}>
       <h2 className="border-b">

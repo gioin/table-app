@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useState, forwardRef, ForwardedRef } from "react";
+import React, { forwardRef, ForwardedRef } from "react";
 
 type Option = {
   value: string | number;
@@ -69,7 +69,6 @@ export const DropDown = forwardRef(
             {options.map((option) => (
               <>
                 <option
-                  // className="text-black"
                   key={option.value}
                   value={option.value}
                   selected={value === option.value}

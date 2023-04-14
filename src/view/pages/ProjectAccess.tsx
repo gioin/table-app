@@ -35,8 +35,6 @@ function ProjectAccess() {
   const tableData = useMemo(() => {
     return data?.data.map((user: Users) => {
       const currentUser = user;
-      console.log("updateUser.isLoading", updateUser.isLoading);
-
       return {
         ...user,
         status: (

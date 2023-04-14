@@ -12,14 +12,14 @@
         },
         "group2": {
           "permission3": true,
-          "permission4": true
+          "permission4": false
         },
         "group3": {
           "permission5": true,
           "permission6": true
         }
       },
-      "status": false,
+      "status": true,
       "id": 5
     },
     {
@@ -41,7 +41,7 @@
           "permission6": false
         }
       },
-      "status": true,
+      "status": false,
       "id": 6
     },
     {
@@ -65,6 +65,28 @@
       },
       "status": true,
       "id": 7
+    },
+    {
+      "firstName": "Evtixi",
+      "lastName": " Dicaprio",
+      "email": "injgia15@gmail.com",
+      "role": "admin",
+      "permissions": {
+        "group1": {
+          "permission1": true,
+          "permission2": true
+        },
+        "group2": {
+          "permission3": true,
+          "permission4": true
+        },
+        "group3": {
+          "permission5": true,
+          "permission6": true
+        }
+      },
+      "status": true,
+      "id": 8
     }
   ]
 }

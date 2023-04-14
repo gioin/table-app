@@ -10,6 +10,7 @@ import UserIcon from "../assets/icons/user.svg";
 import ReactPaginate from "react-paginate";
 import Search from "./inputs/Search";
 import classNames from "classnames";
+import { recordOptions } from "../config/config";
 
 interface Column {
   key: string;
@@ -30,19 +31,9 @@ interface CustomTableProps {
   onDelete?: (id: any) => any;
 }
 
-const recordOptions = [
-  { value: 1, label: "1" },
-  { value: 2, label: "2" },
-  { value: 3, label: "3" },
-  { value: 4, label: "4" },
-  { value: 5, label: "5" },
-  { value: 6, label: "6" }
-];
-
 const CustomTable: React.FC<CustomTableProps> = ({
   data = [],
   columns,
-  // pageSize,
   isLoading = false,
   onView,
   onDelete
@@ -53,15 +44,12 @@ const CustomTable: React.FC<CustomTableProps> = ({
   } | null>({ key: "", direction: "ascending" });
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [searchValue, setSearchValue] = useState("");
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(4);
 
   const sortedData = useMemo(() => {
     let sortableData = [...data];
     if (sortConfig !== null) {
       sortableData.sort((a, b) => {
-        console.log("a", a);
-        console.log("b", b);
-
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "ascending" ? -1 : 1;
         }
@@ -92,8 +80,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
   const endIndex = startIndex + pageSize;
 
   function requestSort(key: string) {
-    console.log(key);
-
     let direction = "descending";
     if (
       sortConfig &&
@@ -106,8 +92,6 @@ const CustomTable: React.FC<CustomTableProps> = ({
   }
 
   const displayedData = filteredData.slice(startIndex, endIndex);
-
-  console.log("displayedData", displayedData);
 
   const cols = useMemo(() => {
     return [...columns, { key: "actions", label: "Actions" }];
@@ -253,7 +237,7 @@ const CustomTable: React.FC<CustomTableProps> = ({
                 <option
                   key={option.value}
                   value={option.value}
-                  selected={option.value === 3}
+                  selected={option.value === 4}
                 >
                   {option.label}
                 </option>

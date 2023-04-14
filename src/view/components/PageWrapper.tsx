@@ -3,7 +3,7 @@ export interface PageWrapperProp {
   children: React.ReactNode | string | React.ReactNode[];
 }
 
-function PageWrapper({ title, children }: PageWrapperProp) {
+const PageWrapper = ({ title, children }: PageWrapperProp) => {
   return (
     <>
       <div className="h-[211px] flex items-center">
