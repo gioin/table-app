@@ -1,82 +1,29 @@
 import CustomTable from "../components/CustomTable";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { api } from "../api/api";
 import { Button } from "../components/Button";
 import Modal from "../components/Modal";
 import AddUser from "./AddUser";
-import { useState, useMemo } from "react";
-import Switch from "../components/inputs/Switch";
-import KeyIcon from "../assets/icons/KeyIcon";
-// import { Users } from "../props/global/props";
-import { Users } from "../props/global/props";
+import { useState } from "react";
+import { Users } from "../../props/global/props";
+import useProjectAccessData from "../../hooks/pages/useProjectAccess";
 
-function ProjectAccess() {
-  const queryClient = useQueryClient();
-  const { data, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => api.get("/users"),
-    refetchOnWindowFocus: false
-  });
+const ProjectAccess = ()=> {
+  const {
+    tableData,
+    isLoading,
+    isError,
+    setcurrentUser,
+    currentUser,
+    addUser,
+    deleteUser
+  } = useProjectAccessData();
+
   let navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [currentUser, setcurrentUser] = useState<any>(null);
 
-  const updateUser = useMutation<Response, unknown, Users>(
-    async (data) => api.put(`/users/${data.id}`, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"]);
-      }
-    }
-  );
-
-  const tableData = useMemo(() => {
-    return data?.data.map((user: Users) => {
-      const currentUser = user;
-      return {
-        ...user,
-        status: (
-          <Switch
-            checked={user.status}
-            onChange={(val) => {
-              currentUser.status = val.target.checked;
-              updateUser.mutate(currentUser);
-            }}
-          />
-        ),
-        user: user.firstName,
-        roleDisplay:
-          user.role === "admin" ? (
-            <div className="flex w-[120px] justify-end">
-              <KeyIcon />
-              {user.role}
-            </div>
-          ) : (
-            <div className="flex w-[120px] justify-end">{user.role} </div>
-          )
-      };
-    });
-  }, [data?.data, updateUser]);
-
-  const addUser = useMutation<Response, unknown, Users>(
-    (data) => api.post("/users", data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"]);
-      }
-    }
-  );
-
-  const deleteUser = useMutation<Response, unknown, Users>(
-    (id) => api.delete(`/users/${id}`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"]);
-      }
-    }
-  );
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>Error</div>;
 
   return (
     <>
@@ -109,10 +56,7 @@ function ProjectAccess() {
         onClose={() => setIsModalOpen(false)}
         width="646px"
       >
-        {
-          //@ts-ignore
-          <AddUser addUser={addUser} setIsModalOpen={setIsModalOpen} />
-        }
+        {<AddUser addUser={addUser} setIsModalOpen={setIsModalOpen} />}
       </Modal>
       <Modal
         isModalOpen={isDeleteModalOpen}
@@ -121,7 +65,6 @@ function ProjectAccess() {
         height="400px"
       >
         <div className=" font-semibold text-[30px] px-10">Delete User</div>
-
         {currentUser && (
           <div className="flex w-full justify-around my-[40px] py-[40px] border-b border-b-gray-200">
             <div>
@@ -139,7 +82,7 @@ function ProjectAccess() {
           variant={"plain"}
           className="bg-rose-400 ml-12"
           onClick={() => {
-            deleteUser.mutate(currentUser.id!);
+            deleteUser.mutate(currentUser?.id!);
             setIsDeleteModalOpen(false);
           }}
         >

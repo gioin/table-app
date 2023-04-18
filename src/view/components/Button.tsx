@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import { forwardRef } from "react";
 
 interface Props {
   children?: React.ReactNode | string | React.ReactNode[];
@@ -7,10 +7,10 @@ interface Props {
   onClick?: React.MouseEventHandler | undefined;
 }
 
-export const Button = React.forwardRef<
+export const Button = forwardRef<
   HTMLButtonElement,
   JSX.IntrinsicElements["button"] & Props
->(function Button({ variant, children, ...rest }, ref) {
+>(({ variant, children, ...rest }, ref) => {
   return (
     <button
       {...rest}

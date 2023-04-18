@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { forwardRef, ForwardedRef } from "react";
+import { forwardRef, ForwardedRef } from "react";
 
 interface ToggleProp
   extends React.InputHTMLAttributes<HTMLInputElement> {

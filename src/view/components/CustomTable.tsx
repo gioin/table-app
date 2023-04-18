@@ -1,16 +1,12 @@
-import React, { useMemo, useState } from "react";
-//@ts-ignore
-import RemoveIcon from "../assets/icons/remove.svg";
-//@ts-ignore
-import SettingsIcon from "../assets/icons/settings.png";
-//@ts-ignore
-import ArrowIcon from "../assets/icons/arrow.svg";
-//@ts-ignore
-import UserIcon from "../assets/icons/user.svg";
+import { useMemo, useState } from "react";
+import RemoveIcon from "../../assets/icons/remove.svg";
+import SettingsIcon from "../../assets/icons/settings.png";
+import ArrowIcon from "../../assets/icons/arrow.svg";
+import UserIcon from "../../assets/icons/user.svg";
 import ReactPaginate from "react-paginate";
 import Search from "./inputs/Search";
 import classNames from "classnames";
-import { recordOptions } from "../config/config";
+import { recordOptions } from "../../config/config";
 
 interface Column {
   key: string;
@@ -27,8 +23,8 @@ interface CustomTableProps {
   columns: Column[];
   pageSize: number;
   isLoading?: boolean;
-  onView?: (col: any) => any;
-  onDelete?: (id: any) => any;
+  onView?: (col: {[key: string]: any}) => void;
+  onDelete?: (row: {[key: string]: any}) => void;
 }
 
 const CustomTable: React.FC<CustomTableProps> = ({

@@ -1,48 +1,43 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { useFormik } from "formik";
-import { useParams } from "react-router-dom";
-import { api } from "../api/api";
-// import KeyIcon from "../assets/icons/KeyIcon";
-import UserIcon from "../assets/icons/UserIcon";
+import UserIcon from "../../assets/icons/UserIcon";
 import Accordion from "../components/Accordion";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/inputs/Dropdown";
 import Switch from "../components/inputs/Switch";
 import TextInput from "../components/inputs/Text";
-import { roles } from "../config/config";
-import { Users } from "../props/global/props";
+import { roles } from "../../config/config";
+import useUserSetup from "../../hooks/pages/useUserSetup";
+import KeyIcon from "../../assets/icons/key.svg";
 
-function UserSetup() {
-  const routeParams = useParams();
+export interface initialValuesProps {
+  firstName: string;
+  lastName: string;
+  role: string;
+  status: boolean;
+  permissions: any;
+}
 
-  const { data, isLoading } = useQuery<{ data: Users }>({
-    queryKey: ["users", routeParams.id],
-    queryFn: () => api.get(`/users/${routeParams.id}`),
-    refetchOnWindowFocus: false
-  });
-  const queryClient = useQueryClient();
+const UserSetup = () => {
+  const {
+    data,
+    isLoading,
+    isError,
+    updateUser,
+    handleGroupToggle,
+    handleSubPermissionToggle
+  } = useUserSetup();
 
-  const updateUser = useMutation<Response, unknown, Users>(
-    async (val) => api.put(`/users/${data?.data.id}`, val),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"]);
-      }
-    }
-  );
-
-  const formik = useFormik({
+  const formik = useFormik<initialValuesProps>({
     initialValues: {
-      firstName: data?.data.firstName ?? "",
-      lastName: data?.data.lastName ?? "",
-      role: data?.data.role ?? "",
-      status: data?.data.status!,
-      permissions: data?.data.permissions ?? {}
+      firstName: data?.firstName ?? "",
+      lastName: data?.lastName ?? "",
+      role: data?.role ?? "",
+      status: data?.status!,
+      permissions: data?.permissions ?? {}
     },
     validate: (values) => {
       const errors: any = {};
-
       if (values.firstName.length === 0) {
         errors.firstName = "First Name is Required";
       }
@@ -52,71 +47,29 @@ function UserSetup() {
       if (values.role.length === 0) {
         errors.role = "Role is Required";
       }
-
       return errors;
     },
     enableReinitialize: true,
     onSubmit: (values) => {
-      //@ts-ignore
-      updateUser.mutate({ ...data?.data, ...values });
+      updateUser.mutate({ ...data!, ...values });
     }
   });
 
-  const handleGroupToggle = (group: any, checked: any) => {
-    formik.setValues((prevValues) => {
-      const updatedGroup = {
-        ...prevValues.permissions[group],
-        ...(checked
-          ? Object.fromEntries(
-              Object.keys(prevValues.permissions[group]).map((p) => [p, true])
-            )
-          : Object.fromEntries(
-              Object.keys(prevValues.permissions[group]).map((p) => [p, false])
-            ))
-      };
-      return {
-        ...prevValues,
-        permissions: {
-          ...prevValues.permissions,
-          [group]: updatedGroup
-        }
-      };
-    });
-  };
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>Error</div>;
 
-  const handleSubPermissionToggle = (
-    group: any,
-    permission: any,
-    checked: boolean
-  ) => {
-    formik.setValues((prevValues) => {
-      const updatedGroup = {
-        ...prevValues.permissions[group],
-        [permission]: checked
-      };
-      return {
-        ...prevValues,
-        permissions: {
-          ...prevValues.permissions,
-          [group]: updatedGroup
-        }
-      };
-    });
-  };
-
-  if (isLoading) return <div>isLoading</div>;
-
-  //@ts-ignore
   return (
     <div className="flex gap-[200px]">
       <div className="flex flex-col items-center mt-10">
-        <div className="flex mb-11">
-          <div className="scale-[3]">
+        <div className="flex mb-16 relative">
+          <div className="scale-[4]">
             <UserIcon />
           </div>
-          {/* <div className="absolute">
-            <KeyIcon />
-          </div> */}
+          {data?.role === "admin" && (
+            <div className="bg-[#7E7EF1] w-[48px] h-[32px] rounded-[30px] flex justify-center items-center mr-6 z-[2] absolute right-[-90px] top-10">
+              <img src={KeyIcon} alt="key" />
+            </div>
+          )}
         </div>
         <div
           className={classNames(" text-center", {
@@ -126,12 +79,12 @@ function UserSetup() {
           <small className="text-gray-400">upload photo</small>
 
           <div className="flex flex-col mt-4 text-center">
-            <div className="text-lg font-bold">{data?.data.firstName}</div>
+            <div className="text-lg font-bold">{data?.firstName}</div>
             <div className="text-lg font-bold mt-[-14px]">
-              {data?.data.lastName}
+              {data?.lastName}
             </div>
           </div>
-          <small className="text-gray-500">{data?.data.email}</small>
+          <small className="text-gray-500">{data?.email}</small>
         </div>
       </div>
 
@@ -173,7 +126,7 @@ function UserSetup() {
                   />
                   <small className="text-red">
                     {formik.errors.firstName ? (
-                      <div>{formik.errors.firstName}</div>
+                      <>{formik.errors.firstName}</>
                     ) : null}
                   </small>
                 </div>
@@ -189,7 +142,7 @@ function UserSetup() {
                   />
                   <small className="text-red">
                     {formik.errors.lastName ? (
-                      <div>{formik.errors.lastName}</div>
+                      <>{formik.errors.lastName}</>
                     ) : null}
                   </small>
                 </div>
@@ -204,14 +157,12 @@ function UserSetup() {
                     onChange={formik.handleChange}
                   />
                   <small className="text-red">
-                    {formik.errors.role ? (
-                      <div>{formik.errors.role}</div>
-                    ) : null}
+                    {formik.errors.role ? <>{formik.errors.role}</> : null}
                   </small>
                 </div>
               </div>
               <Button className="bg-[#7E7EF1]" variant="plain" type="submit">
-                Send Invitation
+                Update
               </Button>
             </div>
             <div>
@@ -237,7 +188,11 @@ function UserSetup() {
                               disabled={!formik.values.status}
                               checked={allPermissionsChecked}
                               onChange={(e) =>
-                                handleGroupToggle(group, e.target.checked)
+                                handleGroupToggle(
+                                  formik,
+                                  group,
+                                  e.target.checked
+                                )
                               }
                             />
                           </div>
@@ -259,6 +214,7 @@ function UserSetup() {
                               }
                               onChange={(e) =>
                                 handleSubPermissionToggle(
+                                  formik,
                                   group,
                                   permission,
                                   e.target.checked
@@ -280,6 +236,6 @@ function UserSetup() {
       <div></div>
     </div>
   );
-}
+};
 
 export default UserSetup;

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { forwardRef, InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 
 interface TextProps {
   label?: string;

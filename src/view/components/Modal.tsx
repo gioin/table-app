@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useKey } from "react-use";

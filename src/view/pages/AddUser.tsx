@@ -1,12 +1,10 @@
-import {
-  UseMutationResult,
-} from "@tanstack/react-query";
+import { UseMutationResult } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { Button } from "../components/Button";
 import { DropDown } from "../components/inputs/Dropdown";
 import TextInput from "../components/inputs/Text";
-import { adminPermissions, roles, userPermissions } from "../config/config";
-import { Users } from "../props/global/props";
+import { adminPermissions, roles, userPermissions } from "../../config/config";
+import { Users } from "../../props/global/props";
 
 export interface InitialValueProps {
   firstName: string;
@@ -16,11 +14,11 @@ export interface InitialValueProps {
 }
 
 interface AddUserProps {
-  addUser: () => UseMutationResult<Response, unknown, Users, unknown>;
+  addUser: UseMutationResult<Response, unknown, Users, unknown>;
   setIsModalOpen: (state: boolean) => void;
 }
 
-function AddUser({ addUser, setIsModalOpen }: AddUserProps) {
+const AddUser = ({ addUser, setIsModalOpen }: AddUserProps) => {
   const formik = useFormik<InitialValueProps>({
     initialValues: {
       firstName: "",
@@ -51,10 +49,8 @@ function AddUser({ addUser, setIsModalOpen }: AddUserProps) {
     onSubmit: (values) => {
       setIsModalOpen(false);
       if (values.role === "admin") {
-        //@ts-ignore
         addUser.mutate({ ...values, ...adminPermissions });
       } else if (values.role === "user") {
-        //@ts-ignore
         addUser.mutate({ ...values, ...userPermissions });
       }
     }
@@ -128,6 +124,6 @@ function AddUser({ addUser, setIsModalOpen }: AddUserProps) {
       </form>
     </div>
   );
-}
+};
 
 export default AddUser;

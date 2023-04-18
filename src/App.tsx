@@ -1,4 +1,5 @@
 // import CustomTable from "./view/components/CustomTable";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import PageWrapper from "./view/components/PageWrapper";
 import ProjectAccess from "./view/pages/ProjectAccess";

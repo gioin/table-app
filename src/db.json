@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "firstName": "Jack",
-      "lastName": "Eduards",
-      "email": "jack@gmail.com",
+      "firstName": "David",
+      "lastName": "Pagano",
+      "email": "david@gmail.com",
       "role": "user",
       "permissions": {
         "group1": {
-          "permission1": false,
+          "permission1": true,
           "permission2": true
         },
         "group2": {
@@ -16,21 +16,21 @@
         },
         "group3": {
           "permission5": true,
-          "permission6": false
+          "permission6": true
         }
       },
       "status": false,
-      "id": 6
+      "id": 5
     },
     {
       "firstName": "Leonardo",
-      "lastName": "Collin",
+      "lastName": "Sona",
       "email": "leonardo@gmail.com",
       "role": "admin",
       "permissions": {
         "group1": {
-          "permission1": false,
-          "permission2": false
+          "permission1": true,
+          "permission2": true
         },
         "group2": {
           "permission3": true,
